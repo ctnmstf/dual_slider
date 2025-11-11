@@ -1,0 +1,45 @@
+name: dual_slider
+description: A highly customizable dual-direction slider widget for Flutter that extends from negative to positive values, perfect for bidirectional controls like volume, balance, or brightness adjustments.
+version: 0.0.1
+homepage: https://github.com/ctnmstf/dual_slider
+repository: https://github.com/ctnmstf/dual_slider
+issue_tracker: https://github.com/ctnmstf/dual_slider/issues
+documentation: https://pub.dev/documentation/dual_slider/latest/
+
+topics:
+  - slider
+  - widget
+  - ui
+  - dual
+  - bidirectional
+
+screenshots:
+  - description: 'Default gradient slider example'
+    path: screenshots/default_example.png
+  - description: 'Multi-color gradient example'
+    path: screenshots/gradient_color_example.png
+  - description: 'Tick marks feature demonstration'
+    path: screenshots/trick_example.png
+
+environment:
+  sdk: ^3.9.2
+  flutter: ">=1.17.0"
+
+platforms:
+  android:
+  ios:
+  linux:
+  macos:
+  web:
+  windows:
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
