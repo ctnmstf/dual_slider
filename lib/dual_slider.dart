@@ -70,12 +70,12 @@ class DualSlider extends StatefulWidget {
   /// The border radius of the track.
   ///
   /// If null, defaults to a fully rounded shape (trackHeight / 2).
-  /// 
+  ///
   /// Examples:
   /// - `BorderRadius.circular(10)` - All corners with 10px radius
   /// - `BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))` - Top corners rounded
   /// - `BorderRadius.zero` - Sharp rectangular corners
-  /// 
+  ///
   /// Defaults to null (fully rounded).
   final BorderRadius? trackBorderRadius;
 
@@ -83,13 +83,13 @@ class DualSlider extends StatefulWidget {
   ///
   /// If null, it will be automatically calculated based on trackHeight
   /// to maintain good proportions (trackHeight * 1.2).
-  /// 
+  ///
   /// If provided, the value will be clamped between:
   /// - Minimum: trackHeight * 0.8 (to prevent invisible thumbs)
   /// - Maximum: trackHeight * 2.4 (to prevent oversized thumbs)
-  /// 
+  ///
   /// Note: This is the diameter (full width), not the radius.
-  /// 
+  ///
   /// Defaults to null (auto-calculated).
   final double? thumbSize;
 
@@ -97,11 +97,11 @@ class DualSlider extends StatefulWidget {
   ///
   /// If null, defaults to `maxValue * 2`, creating divisions for integer values.
   /// For example, with maxValue=100, you get 200 divisions (steps of 1.0).
-  /// 
+  ///
   /// Set to a smaller number for larger steps:
   /// - divisions = 10 with maxValue=100 → steps of 20 (values: -100, -80, -60, ..., 0, ..., 100)
   /// - divisions = 4 with maxValue=10 → steps of 5 (values: -10, -5, 0, 5, 10)
-  /// 
+  ///
   /// For completely smooth (continuous) movement without snapping,
   /// set a very high value like `maxValue * 100`.
   final int? divisions;
@@ -110,7 +110,7 @@ class DualSlider extends StatefulWidget {
   ///
   /// If true, small circular marks will be drawn at each division point.
   /// Only visible when [divisions] is set.
-  /// 
+  ///
   /// The size is automatically calculated by Flutter for optimal appearance.
   ///
   /// Defaults to false.
@@ -120,7 +120,7 @@ class DualSlider extends StatefulWidget {
   ///
   /// If null, defaults to white with 50% opacity.
   /// Only used when [showTickMarks] is true.
-  /// 
+  ///
   /// For dual sliders, this typically represents the negative/left side.
   final Color? activeTickMarkColor;
 
@@ -128,7 +128,7 @@ class DualSlider extends StatefulWidget {
   ///
   /// If null, uses [activeTickMarkColor] or defaults to white with 50% opacity.
   /// Only used when [showTickMarks] is true.
-  /// 
+  ///
   /// For dual sliders, this typically represents the positive/right side.
   /// Set this to a different color than [activeTickMarkColor] to visually
   /// distinguish between negative and positive sides.
@@ -191,24 +191,29 @@ class _DualSliderState extends State<DualSlider> {
   Widget build(BuildContext context) {
     // Calculate thumb size based on track height if not provided
     // User provides diameter (size), we convert to radius internally
-    final double autoThumbSize = widget.trackHeight * 1.2; // Default: 120% of track height
-    final double minThumbSize = widget.trackHeight * 0.8; // Minimum: 80% of track height
-    final double maxThumbSize = widget.trackHeight * 2.4; // Maximum: 240% of track height
-    
+    final double autoThumbSize =
+        widget.trackHeight * 1.2; // Default: 120% of track height
+    final double minThumbSize =
+        widget.trackHeight * 0.8; // Minimum: 80% of track height
+    final double maxThumbSize =
+        widget.trackHeight * 2.4; // Maximum: 240% of track height
+
     final double effectiveThumbSize = widget.thumbSize != null
         ? widget.thumbSize!.clamp(minThumbSize, maxThumbSize)
         : autoThumbSize;
-    
+
     // Convert diameter to radius for internal use
     final double effectiveThumbRadius = effectiveThumbSize / 2;
-    
+
     // Calculate tick mark colors
     final Color defaultTickMarkColor = Colors.white.withValues(alpha: 0.5);
-    final Color effectiveActiveTickMarkColor = 
+    final Color effectiveActiveTickMarkColor =
         widget.activeTickMarkColor ?? defaultTickMarkColor;
-    final Color effectiveInactiveTickMarkColor = 
-        widget.inactiveTickMarkColor ?? widget.activeTickMarkColor ?? defaultTickMarkColor;
-    
+    final Color effectiveInactiveTickMarkColor =
+        widget.inactiveTickMarkColor ??
+        widget.activeTickMarkColor ??
+        defaultTickMarkColor;
+
     return SliderTheme(
       data: SliderTheme.of(context).copyWith(
         activeTrackColor: Colors.transparent, // Gradient in custom track shape
@@ -228,8 +233,12 @@ class _DualSliderState extends State<DualSlider> {
           borderRadius: widget.trackBorderRadius,
         ),
         // Tick marks configuration - use default shape for automatic sizing
-        activeTickMarkColor: widget.showTickMarks ? effectiveActiveTickMarkColor : Colors.transparent,
-        inactiveTickMarkColor: widget.showTickMarks ? effectiveInactiveTickMarkColor : Colors.transparent,
+        activeTickMarkColor: widget.showTickMarks
+            ? effectiveActiveTickMarkColor
+            : Colors.transparent,
+        inactiveTickMarkColor: widget.showTickMarks
+            ? effectiveInactiveTickMarkColor
+            : Colors.transparent,
       ),
       child: Slider(
         padding: EdgeInsets.zero,
@@ -326,11 +335,7 @@ class CustomSliderTrackShape extends RoundedRectSliderTrackShape {
   final List<Color>? colors;
   final BorderRadius? borderRadius;
 
-  const CustomSliderTrackShape({
-    this.gradient,
-    this.colors,
-    this.borderRadius,
-  });
+  const CustomSliderTrackShape({this.gradient, this.colors, this.borderRadius});
 
   @override
   Rect getPreferredRect({
@@ -342,9 +347,10 @@ class CustomSliderTrackShape extends RoundedRectSliderTrackShape {
   }) {
     final double trackHeight = sliderTheme.trackHeight ?? 4.0;
     final double trackLeft = offset.dx;
-    final double trackTop = offset.dy + (parentBox.size.height - trackHeight) / 2;
+    final double trackTop =
+        offset.dy + (parentBox.size.height - trackHeight) / 2;
     final double trackWidth = parentBox.size.width;
-    
+
     return Rect.fromLTWH(trackLeft, trackTop, trackWidth, trackHeight);
   }
 
@@ -372,13 +378,14 @@ class CustomSliderTrackShape extends RoundedRectSliderTrackShape {
 
     final Canvas canvas = context.canvas;
     final trackHeight = sliderTheme.trackHeight ?? 4.0;
-    
+
     // Calculate vertical center position for the track
-    final double trackTop = offset.dy + (parentBox.size.height - trackHeight) / 2;
+    final double trackTop =
+        offset.dy + (parentBox.size.height - trackHeight) / 2;
 
     // Use custom border radius or default to fully rounded
-    final effectiveBorderRadius = borderRadius ?? 
-        BorderRadius.circular(trackHeight / 2);
+    final effectiveBorderRadius =
+        borderRadius ?? BorderRadius.circular(trackHeight / 2);
 
     final trackRect2 = Rect.fromLTWH(
       trackRect.left,
@@ -404,7 +411,7 @@ class CustomSliderTrackShape extends RoundedRectSliderTrackShape {
       trackRect.width,
       trackHeight,
     );
-    
+
     if (gradient != null) {
       // Use custom gradient if provided
       paint = Paint()
