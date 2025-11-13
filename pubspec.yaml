@@ -1,6 +1,6 @@
 name: dual_slider
-description: A highly customizable dual-direction slider widget for Flutter that extends from negative to positive values, perfect for bidirectional controls like volume, balance, or brightness adjustments.
-version: 0.0.1
+description: A highly customizable Flutter slider widget with dual-direction support, perfect for bidirectional controls like volume, balance, or brightness.
+version: 0.0.1+1
 homepage: https://github.com/ctnmstf/dual_slider
 repository: https://github.com/ctnmstf/dual_slider
 issue_tracker: https://github.com/ctnmstf/dual_slider/issues
